@@ -1,0 +1,47 @@
+# Dependency directories
+node_modules/
+*/node_modules/
+
+# Environment files
+.env
+.env.local
+.env.*.local
+*.env
+
+# WhatsApp Auth Multi-File Credentials
+storage/whatsapp-auth/
+*/storage/whatsapp-auth/
+auth/
+.wwebjs_auth/
+.wwebjs_cache/
+
+# Local databases & exports
+*.sqlite
+*.sqlite3
+*.db
+storage/exports/*.xlsx
+*/storage/exports/*.xlsx
+storage/uploads/
+*/storage/uploads/
+
+# Build artifacts
+dist/
+build/
+*/dist/
+*/build/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+*.log
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db

@@ -1,0 +1,17 @@
+FROM node:20-alpine AS runner
+
+WORKDIR /app
+
+# Install production dependencies
+COPY package*.json ./
+RUN npm ci --only=production
+
+# Copy source code and migrations
+COPY . .
+
+# Create storage directories
+RUN mkdir -p storage/whatsapp-auth storage/exports storage/uploads
+
+EXPOSE 5000
+
+CMD ["node", "src/server.js"]
