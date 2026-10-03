@@ -167,9 +167,17 @@ export default function OrdersTable({
 
                   {/* Status */}
                   <td className="py-3.5 px-4 text-center">
-                    <span className={`inline-block px-2.5 py-1 text-[11px] font-bold rounded-lg border ${getStatusBadge(o.status)}`}>
-                      {o.status}
-                    </span>
+                    <select
+                      value={o.status}
+                      onChange={(e) => onQuickStatusChange && onQuickStatusChange(o.id, e.target.value)}
+                      className={`inline-block px-2 py-1 pr-6 text-[11px] font-bold rounded-lg border focus:outline-none focus:ring-2 focus:ring-slate-400/20 cursor-pointer text-center ${getStatusBadge(o.status)}`}
+                      style={{ textAlignLast: 'center' }}
+                    >
+                      <option value="CONFIRMED">CONFIRMED</option>
+                      <option value="IN_PROGRESS">IN_PROGRESS</option>
+                      <option value="DELIVERED">DELIVERED</option>
+                      <option value="CANCELLED">CANCELLED</option>
+                    </select>
                   </td>
 
                   {/* Actions */}

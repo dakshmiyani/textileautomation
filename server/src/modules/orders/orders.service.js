@@ -50,14 +50,14 @@ class OrdersService {
   /**
    * Create an order directly from WhatsApp message
    */
-  async createFromWhatsApp({ rawText, phoneNumber, messageId, senderName, context }) {
-    if (!context || !context.tenantId) throw new Error('TenantContextError: Missing tenantId in service');
+  async createFromWhatsApp({ rawText, phoneNumber, messageId, senderName, tenantId }) {
+    if (!tenantId) throw new Error('TenantContextError: Missing tenantId in service');
     const parsed = parseOrderMessage(rawText);
     if (!parsed) {
       throw new Error('Message could not be parsed as an order confirmation');
     }
 
-    const customerProfile = await customersRepository.findByPhoneOrName(phoneNumber, senderName, context.tenantId);
+    const customerProfile = await customersRepository.findByPhoneOrName(phoneNumber, senderName, tenantId);
 
     const customerName = parsed.customer_name || customerProfile?.customer_name || senderName || 'Asmita miyani';
     const partyName = parsed.party_name || customerProfile?.party_name || senderName || 'YOGI TEX FAB';
@@ -76,7 +76,7 @@ class OrdersService {
       billing_address: billingAddress,
       gst_no: gstNo,
       phone_number: phoneNumber,
-      tenant_id: context.tenantId
+      tenant_id: tenantId
     });
 
     const calculations = parsed.calculations;
@@ -120,7 +120,7 @@ class OrdersService {
       whatsapp_message_id: messageId,
       raw_message: rawText,
       reply_message: replyMessage,
-      tenant_id: context.tenantId
+      tenant_id: tenantId
     };
 
     const savedOrder = await ordersRepository.create(recordData);

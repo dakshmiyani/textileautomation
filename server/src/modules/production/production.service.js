@@ -63,7 +63,7 @@ class ProductionService {
       let gstNo = '';
       
       if (record.whatsapp_number) {
-        const profile = await customersRepository.findByPhoneOrName(record.whatsapp_number, record.contact_name);
+        const profile = await customersRepository.findByPhoneOrName(record.whatsapp_number, record.contact_name, context.tenantId);
         if (profile) {
           if (profile.customer_name) customerName = profile.customer_name;
           if (profile.party_name) partyName = profile.party_name;

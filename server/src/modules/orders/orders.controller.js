@@ -8,15 +8,17 @@ class OrdersController {
   async listOrders(req, res, next) {
     try {
       const { page = 1, limit = 20, search = '', status = 'ALL', sortBy = 'created_at', sortOrder = 'desc' } = req.query;
-      const result = await ordersService.listOrders({
-        page: parseInt(page, 10),
-        limit: parseInt(limit, 10),
-        search,
-        status,
-        sortBy,
-        sortOrder,
-        tenantId: req.tenant?.id
-      });
+      const result = await ordersService.listOrders(
+        {
+          page: parseInt(page, 10),
+          limit: parseInt(limit, 10),
+          search,
+          status,
+          sortBy,
+          sortOrder
+        },
+        { tenantId: req.tenant?.id }
+      );
 
       res.status(200).json({
         success: true,

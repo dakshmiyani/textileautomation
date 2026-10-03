@@ -14,7 +14,8 @@ export function useOrdersQuery(params = {}) {
   return useQuery({
     queryKey: ['orders', 'list', params],
     queryFn: () => fetchOrders(params),
-    keepPreviousData: true
+    keepPreviousData: true,
+    refetchInterval: 5000 // Auto-refresh every 5 seconds for live updates
   });
 }
 

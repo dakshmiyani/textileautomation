@@ -238,6 +238,9 @@ export default function Orders() {
         onEdit={handleOpenEditOrder}
         onViewReply={handleViewReply}
         onDelete={handleDelete}
+        onQuickStatusChange={(id, newStatus) => {
+          updateOrder({ id, status: newStatus }, { onSuccess: refetchMetrics });
+        }}
       />
 
       {/* Edit / New Order Modal with Live Dynamic Recalculation */}

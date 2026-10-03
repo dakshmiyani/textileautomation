@@ -104,9 +104,8 @@ async function handleIncomingMessage(msg, sock, tenantId) {
         tenantId
       });
 
-      // Send formatted WhatsApp reply with detailed calculations and confirmation
-      await sock.sendMessage(remoteJid, { text: replyMessage }, { quoted: msg });
-      logger.info({ remoteJid, orderNo: order.order_no }, 'Sent WhatsApp order calculation reply');
+      // Prevent infinite ping-pong loop: silently log the order in the database without replying.
+      logger.info({ remoteJid, orderNo: order.order_no }, 'Silently processed WhatsApp order without sending a reply to avoid loops');
 
       await logWhatsAppMessage({
         message_id: messageId,
