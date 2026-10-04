@@ -25,7 +25,7 @@ import { useWhatsAppStatusQuery } from '../features/whatsapp/hooks';
 
 const NAV_ITEMS = [
   { label: 'ERP Overview', path: '/dashboard', icon: LayoutDashboard, permission: 'production.read' },
-  { label: 'Yarn Production', path: '/production', icon: Factory, permission: 'production.read' },
+  { label: 'Order Records', path: '/production', icon: Factory, permission: 'production.read' },
   { label: 'WhatsApp Gateway', path: '/whatsapp', icon: MessageSquare, permission: 'whatsapp.read' },
   { label: 'Inventory', path: '/inventory', icon: Package, permission: 'inventory.read' },
   { label: 'Orders & Calculations', path: '/orders', icon: ShoppingCart, permission: 'production.read' },

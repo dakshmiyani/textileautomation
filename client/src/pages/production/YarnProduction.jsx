@@ -52,7 +52,7 @@ export default function YarnProduction() {
             <div className="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center font-bold">
               <Factory className="w-4 h-4" />
             </div>
-            <h2 className="text-lg font-bold text-slate-900 tracking-tight">Yarn Production Records</h2>
+            <h2 className="text-lg font-bold text-slate-900 tracking-tight">WhatsApp Order Records</h2>
           </div>
           <p className="text-xs text-slate-500 mt-1">
             Complete database of manufactured yarn batches, beam metrics, and WhatsApp submissions.
