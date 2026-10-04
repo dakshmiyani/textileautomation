@@ -52,26 +52,31 @@ export default function WhatsAppReplyModal({ isOpen, onClose, order }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in">
-      <div className="bg-white rounded-2xl max-w-xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
-        {/* Header */}
-        <div className="p-4 px-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
-              <MessageSquare className="w-4 h-4" />
+    <div className="fixed -inset-10 z-50 flex items-center justify-center p-14 bg-slate-900/70 backdrop-blur-sm animate-fade-in overflow-y-auto">
+      <div className="relative w-full max-w-xl mx-auto">
+        {/* Outer Close Button */}
+       
+
+        {/* Modal Content */}
+        <div className="bg-white rounded-2xl w-full max-h-[90vh] flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
+          {/* Header */}
+          <div className="p-4 px-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center font-bold">
+                <MessageSquare className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-slate-800">WhatsApp Confirmation & Calculations</h3>
+                <p className="text-xs text-slate-500">Order #{order.order_no} • {order.party_name}</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base font-bold text-slate-800">WhatsApp Confirmation & Calculations</h3>
-              <p className="text-xs text-slate-500">Order #{order.order_no} • {order.party_name}</p>
-            </div>
+            <button
+              onClick={onClose}
+              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors hidden sm:block"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
 
         {/* Body */}
         <div className="p-6 overflow-y-auto space-y-4">
@@ -141,7 +146,9 @@ export default function WhatsAppReplyModal({ isOpen, onClose, order }) {
             Close
           </button>
         </div>
+        </div>
       </div>
     </div>
   );
 }
+

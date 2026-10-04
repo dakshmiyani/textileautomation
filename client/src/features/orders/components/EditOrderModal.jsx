@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { X, Calculator, Save, RefreshCw, MessageSquare } from 'lucide-react';
+import { X, Calculator, Save, RefreshCw, MessageSquare, Send, Check, AlertCircle } from 'lucide-react';
 import { calculateOrderMetrics, formatOrderReply } from '../orderCalculations';
+import { useSendOrderWhatsAppMutation } from '../hooks';
 
 export default function EditOrderModal({ isOpen, onClose, order, onSave, isSaving }) {
   const [formData, setFormData] = useState({
@@ -31,6 +32,33 @@ export default function EditOrderModal({ isOpen, onClose, order, onSave, isSavin
     whatsapp_number: ''
   });
 
+  const { mutate: sendReply, isPending: isSendingWhatsApp } = useSendOrderWhatsAppMutation();
+  const [sendSuccess, setSendSuccess] = useState(null);
+  const [sendError, setSendError] = useState(null);
+
+  const handleSendWhatsApp = (e) => {
+    e.preventDefault();
+    if (!order?.id) {
+      setSendError("Please save the order first before sending.");
+      return;
+    }
+    if (!formData.whatsapp_number) {
+      setSendError("Please enter a valid Party WhatsApp number.");
+      return;
+    }
+
+    setSendError(null);
+    setSendSuccess(null);
+
+    sendReply(
+      { id: order.id, phone: formData.whatsapp_number },
+      {
+        onSuccess: () => setSendSuccess(`Sent successfully to ${formData.whatsapp_number}!`),
+        onError: (err) => setSendError(err.response?.data?.message || err.message || 'Failed to send.')
+      }
+    );
+  };
+
   useEffect(() => {
     if (order) {
       setFormData({
@@ -39,7 +67,7 @@ export default function EditOrderModal({ isOpen, onClose, order, onSave, isSavin
         mill_name: order.mill_name || 'KESARI NANDAN TEX FAB',
         customer_name: order.customer_name || '',
         party_name: order.party_name || '',
-        billing_address: order.billing_address || '',
+        billing_address: order.billing_address || "Plot No. 12-13, Jalbhumi Industrial, Olpad Sayan Road, Surat, Gujarat - 394130",
         gst_no: order.gst_no || '',
         item_name: order.item_name || '',
         ends: order.ends || 0,
@@ -125,35 +153,37 @@ export default function EditOrderModal({ isOpen, onClose, order, onSave, isSavin
   const formatNum = (n) => Number(n || 0).toLocaleString('en-IN');
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-slate-900/60 backdrop-blur-sm animate-fade-in overflow-y-auto">
-      <div className="bg-white rounded-2xl max-w-4xl w-full my-6 flex flex-col shadow-2xl border border-slate-200 overflow-hidden">
-        {/* Header */}
-        <div className="p-4 px-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
-          <div className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center font-bold">
-              <Calculator className="w-4 h-4" />
+    <div className="fixed -inset-10 z-50 flex items-start justify-center pt-14 pb-14 px-14 sm:px-16 bg-slate-900/70 backdrop-blur-sm animate-fade-in overflow-y-auto">
+      <div className="relative w-full max-w-6xl m-auto">
+        {/* Modal Content */}
+        <div className="bg-white rounded-2xl w-full flex flex-col shadow-2xl border border-slate-200 overflow-hidden relative">
+          {/* Header */}
+          <div className="p-4 px-6 border-b border-slate-100 flex items-center justify-between bg-slate-50/80">
+            <div className="flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center font-bold">
+                <Calculator className="w-4 h-4" />
+              </div>
+              <div>
+                <h3 className="text-base font-bold text-slate-800">
+                  {order ? `Edit Order #${formData.order_no}` : 'New Order & Calculation'}
+                </h3>
+                <p className="text-xs text-slate-500">Live dynamic recalculation for textile warp, beam metrics & billing</p>
+              </div>
             </div>
-            <div>
-              <h3 className="text-base font-bold text-slate-800">
-                {order ? `Edit Order #${formData.order_no}` : 'New Order & Calculation'}
-              </h3>
-              <p className="text-xs text-slate-500">Live dynamic recalculation for textile warp, beam metrics & billing</p>
-            </div>
+            <button
+              onClick={onClose}
+              className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors hidden sm:block"
+            >
+              <X className="w-4 h-4" />
+            </button>
           </div>
-          <button
-            onClick={onClose}
-            className="p-1.5 text-slate-400 hover:text-slate-700 hover:bg-slate-100 rounded-lg transition-colors"
-          >
-            <X className="w-4 h-4" />
-          </button>
-        </div>
 
         {/* Form Body - 2 Columns */}
         <form onSubmit={handleSubmit} className="flex-1 overflow-y-auto p-6">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             
-            {/* Left Column: Form Inputs (7 cols) */}
-            <div className="lg:col-span-7 space-y-4">
+            {/* Column 1: Order & Billing */}
+            <div className="space-y-4">
               
               {/* Order & Party Header */}
               <div className="bg-slate-50/70 p-4 rounded-xl border border-slate-200/80 space-y-3">
@@ -230,6 +260,48 @@ export default function EditOrderModal({ isOpen, onClose, order, onSave, isSavin
                   </div>
                 </div>
               </div>
+
+              {/* WhatsApp Reply Live Preview */}
+              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-3">
+                <div className="text-xs font-bold text-slate-700 flex items-center justify-between">
+                  <div className="flex items-center gap-1.5">
+                    <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
+                    <span>WhatsApp Message Preview</span>
+                  </div>
+                </div>
+                <div className="bg-[#e7fedb] border border-emerald-200 rounded-xl p-3 text-[11px] font-mono text-slate-800 leading-snug whitespace-pre-wrap max-h-48 overflow-y-auto shadow-inner">
+                  {liveReply}
+                </div>
+                
+                {/* Send Button & Alerts */}
+                <div className="space-y-2 pt-1">
+                  {sendSuccess && (
+                    <div className="p-2 bg-emerald-50 border border-emerald-200 text-emerald-800 text-[11px] rounded-lg flex items-center gap-1.5">
+                      <Check className="w-3.5 h-3.5 shrink-0 text-emerald-600" />
+                      <span>{sendSuccess}</span>
+                    </div>
+                  )}
+                  {sendError && (
+                    <div className="p-2 bg-rose-50 border border-rose-200 text-rose-800 text-[11px] rounded-lg flex items-center gap-1.5">
+                      <AlertCircle className="w-3.5 h-3.5 shrink-0 text-rose-600" />
+                      <span>{sendError}</span>
+                    </div>
+                  )}
+                  <button
+                    type="button"
+                    onClick={handleSendWhatsApp}
+                    disabled={isSendingWhatsApp || !order?.id || !formData.whatsapp_number}
+                    className="w-full inline-flex items-center justify-center gap-1.5 px-4 py-2 text-xs font-semibold text-white bg-emerald-600 hover:bg-emerald-700 rounded-lg transition-colors disabled:opacity-50 shadow-sm"
+                  >
+                    {isSendingWhatsApp ? <RefreshCw className="w-3.5 h-3.5 animate-spin" /> : <Send className="w-3.5 h-3.5" />}
+                    <span>{isSendingWhatsApp ? 'Sending...' : (order?.id ? 'Send WhatsApp Message' : 'Save Order to Send')}</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            {/* Column 2: Technical Specs & Pricing */}
+            <div className="space-y-4">
 
               {/* Technical Item & Beam Specifications */}
               <div className="bg-slate-50/70 p-4 rounded-xl border border-slate-200/80 space-y-3">
@@ -423,8 +495,8 @@ export default function EditOrderModal({ isOpen, onClose, order, onSave, isSavin
 
             </div>
 
-            {/* Right Column: Live Dynamic Calculations & WhatsApp Preview (5 cols) */}
-            <div className="lg:col-span-5 space-y-4">
+            {/* Column 3: Live Dynamic Calculations & WhatsApp Preview */}
+            <div className="space-y-4 flex flex-col">
               
               {/* Live Technical Metrics Card */}
               <div className="bg-gradient-to-br from-teal-900 to-slate-900 text-white p-5 rounded-2xl shadow-lg border border-teal-800/40 space-y-4">
@@ -484,17 +556,6 @@ export default function EditOrderModal({ isOpen, onClose, order, onSave, isSavin
                 </div>
               </div>
 
-              {/* WhatsApp Reply Live Preview */}
-              <div className="bg-slate-50 p-4 rounded-xl border border-slate-200/80 space-y-2">
-                <div className="text-xs font-bold text-slate-700 flex items-center gap-1.5">
-                  <MessageSquare className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>WhatsApp Message Preview</span>
-                </div>
-                <div className="bg-[#e7fedb] border border-emerald-200 rounded-xl p-3 text-[11px] font-mono text-slate-800 leading-snug whitespace-pre-wrap max-h-48 overflow-y-auto">
-                  {liveReply}
-                </div>
-              </div>
-
             </div>
 
           </div>
@@ -519,6 +580,7 @@ export default function EditOrderModal({ isOpen, onClose, order, onSave, isSavin
             </button>
           </div>
         </form>
+        </div>
       </div>
     </div>
   );
