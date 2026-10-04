@@ -10,6 +10,16 @@ export default function WhatsAppReplyModal({ isOpen, onClose, order }) {
 
   const { mutate: sendReply, isPending: isSending } = useSendOrderWhatsAppMutation();
 
+  React.useEffect(() => {
+    if (order?.whatsapp_number) {
+      setPhoneNumber(order.whatsapp_number);
+    } else {
+      setPhoneNumber('');
+    }
+    setSendSuccess(null);
+    setSendError(null);
+  }, [order]);
+
   if (!isOpen || !order) return null;
 
   const replyText = order.reply_message || '';

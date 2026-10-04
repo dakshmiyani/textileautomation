@@ -285,7 +285,7 @@ class OrdersService {
       throw error;
     }
 
-    const session = whatsAppSessionManager._getSession(context.tenantId);
+    const session = whatsAppSessionManager._getSession(userContext.tenantId);
     const sock = session?.sock;
     if (!sock || session.status !== 'CONNECTED') {
       const error = new Error('WhatsApp Gateway is currently disconnected. Please connect WhatsApp in WhatsApp Gateway tab.');
