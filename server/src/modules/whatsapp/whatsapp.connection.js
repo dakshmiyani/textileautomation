@@ -56,6 +56,7 @@ class WhatsAppSessionManager {
       const { version } = await fetchLatestBaileysVersion();
 
       const baileysLogger = logger.child({ module: 'baileys', tenantId });
+      baileysLogger.level = 'warn'; // Suppress noisy info/trace logs (like identity changes)
 
       session.sock = makeWASocket({
         version,
