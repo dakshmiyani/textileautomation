@@ -1,7 +1,7 @@
 require('dotenv').config();
 const path = require('path');
 
-const isSqlite = process.env.DB_CLIENT === 'sqlite3' || !process.env.DATABASE_URL && !process.env.DB_HOST;
+
 
 module.exports = {
   development: {
@@ -53,11 +53,21 @@ module.exports = {
   },
 
   test: {
-    client: 'sqlite3',
-    connection: {
-      filename: ':memory:'
+    client: 'pg',
+    connection: process.env.DATABASE_URL_TEST 
+      ? { connectionString: process.env.DATABASE_URL_TEST, ssl: { rejectUnauthorized: false } }
+      : {
+          host: process.env.DB_HOST || '127.0.0.1',
+          port: Number(process.env.DB_PORT) || 5432,
+          database: 'textile_erp_test',
+          user: process.env.DB_USER || 'postgres',
+          password: process.env.DB_PASSWORD || 'postgres',
+          ssl: process.env.DB_SSL === 'true' ? { rejectUnauthorized: false } : false
+        },
+    pool: {
+      min: 2,
+      max: 10
     },
-    useNullAsDefault: true,
     migrations: {
       directory: path.join(__dirname, 'src', 'database', 'migrations')
     },

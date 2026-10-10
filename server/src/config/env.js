@@ -9,7 +9,7 @@ const envSchema = z.object({
   CLIENT_URL: z.string().default('http://localhost:5173'),
 
   // Database
-  DB_CLIENT: z.enum(['pg', 'sqlite3']).default('pg'),
+  DB_CLIENT: z.enum(['pg']).default('pg'),
   DATABASE_URL: z.string().optional(),
   DB_HOST: z.string().default('127.0.0.1'),
   DB_PORT: z.string().transform(Number).default('5432'),

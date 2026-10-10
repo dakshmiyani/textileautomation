@@ -76,90 +76,147 @@ function WhatsAppStatusPanel() {
 }
 
 export default function Settings() {
-  const { user } = useAuth();
+  const { user, activeTenant } = useAuth();
+  const [activeTab, setActiveTab] = React.useState('profile');
 
   return (
     <div className="space-y-6">
-      <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-sm flex items-center justify-between">
-        <div>
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center font-bold">
-              <SettingsIcon className="w-4 h-4" />
+      <div className="bg-white rounded-2xl border border-slate-200/80 shadow-sm overflow-hidden">
+        <div className="p-5 flex items-center justify-between border-b border-slate-100">
+          <div>
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-lg bg-teal-50 text-teal-700 flex items-center justify-center font-bold">
+                <SettingsIcon className="w-4 h-4" />
+              </div>
+              <h2 className="text-lg font-bold text-slate-900 tracking-tight">System Settings</h2>
             </div>
-            <h2 className="text-lg font-bold text-slate-900 tracking-tight">System Configuration & RBAC</h2>
+            <p className="text-xs text-slate-500 mt-1">
+              Manage your personal profile, global ERP parameters, and WhatsApp gateway integration.
+            </p>
           </div>
-          <p className="text-xs text-slate-500 mt-1">
-            Global ERP tenant parameters, multi-factory settings, and role-based permissions.
-          </p>
+        </div>
+        
+        <div className="flex bg-slate-50/50 border-b border-slate-200 px-2">
+          <button
+            onClick={() => setActiveTab('profile')}
+            className={`px-4 py-3 text-sm font-semibold border-b-2 transition-colors ${
+              activeTab === 'profile' 
+                ? 'border-teal-600 text-teal-700' 
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            My Profile
+          </button>
+          <button
+            onClick={() => setActiveTab('system')}
+            className={`px-4 py-3 text-sm font-semibold border-b-2 transition-colors ${
+              activeTab === 'system' 
+                ? 'border-teal-600 text-teal-700' 
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            System Configuration
+          </button>
+          <button
+            onClick={() => setActiveTab('whatsapp')}
+            className={`px-4 py-3 text-sm font-semibold border-b-2 transition-colors ${
+              activeTab === 'whatsapp' 
+                ? 'border-teal-600 text-teal-700' 
+                : 'border-transparent text-slate-500 hover:text-slate-800'
+            }`}
+          >
+            WhatsApp Gateway
+          </button>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* User Session & Role Card */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
-          <div className="flex items-center gap-2 text-xs font-bold text-slate-800 mb-4">
-            <Shield className="w-4 h-4 text-teal-600" />
-            <span>Active Operator Identity</span>
-          </div>
+      <div className="animate-in fade-in slide-in-from-bottom-2 duration-300">
+        {activeTab === 'profile' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* User Session & Role Card */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-800 mb-4">
+                <Shield className="w-4 h-4 text-teal-600" />
+                <span>Active Operator Identity</span>
+              </div>
 
-          <div className="space-y-3 text-xs">
-            <div className="flex justify-between py-2 border-b border-slate-100">
-              <span className="text-slate-500">Name</span>
-              <span className="font-semibold text-slate-900">{user?.name || 'Administrator'}</span>
+              <div className="space-y-3 text-xs">
+                <div className="flex justify-between py-2 border-b border-slate-100">
+                  <span className="text-slate-500">Name</span>
+                  <span className="font-semibold text-slate-900">{user?.name || 'Administrator'}</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-slate-100">
+                  <span className="text-slate-500">Email</span>
+                  <span className="font-mono font-semibold text-slate-900">{user?.email || 'admin@textileerp.com'}</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-slate-100">
+                  <span className="text-slate-500">Assigned Role</span>
+                  <span className="font-mono font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded">
+                    {activeTenant?.role_name || 'SUPER_ADMIN'}
+                  </span>
+                </div>
+                <div className="flex justify-between py-2">
+                  <span className="text-slate-500">Granted Permissions</span>
+                  <span className="font-semibold text-slate-700">{activeTenant?.permissions?.length || 14} system rights</span>
+                </div>
+              </div>
             </div>
-            <div className="flex justify-between py-2 border-b border-slate-100">
-              <span className="text-slate-500">Email</span>
-              <span className="font-mono font-semibold text-slate-900">{user?.email || 'admin@textileerp.com'}</span>
-            </div>
-            <div className="flex justify-between py-2 border-b border-slate-100">
-              <span className="text-slate-500">Assigned Role</span>
-              <span className="font-mono font-bold text-teal-800 bg-teal-50 px-2 py-0.5 rounded">
-                {user?.role || 'SUPER_ADMIN'}
-              </span>
-            </div>
-            <div className="flex justify-between py-2">
-              <span className="text-slate-500">Granted Permissions</span>
-              <span className="font-semibold text-slate-700">{user?.permissions?.length || 14} system rights</span>
+            
+            {/* Add placeholder for Profile Editing if needed */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm border-dashed flex flex-col items-center justify-center text-center">
+                <div className="w-12 h-12 bg-slate-50 rounded-full flex items-center justify-center mb-3">
+                    <Shield className="w-6 h-6 text-slate-300" />
+                </div>
+                <h3 className="text-sm font-bold text-slate-700">Account Security</h3>
+                <p className="text-xs text-slate-500 mt-1 max-w-[200px]">Password and security settings will be available in a future update.</p>
             </div>
           </div>
-        </div>
+        )}
 
-        {/* Database & Infrastructure */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
-          <div className="flex items-center gap-2 text-xs font-bold text-slate-800 mb-4">
-            <Server className="w-4 h-4 text-indigo-600" />
-            <span>Backend Architecture</span>
-          </div>
+        {activeTab === 'system' && (
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {/* Database & Infrastructure */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-800 mb-4">
+                <Server className="w-4 h-4 text-indigo-600" />
+                <span>Backend Architecture</span>
+              </div>
 
-          <div className="space-y-3 text-xs">
-            <div className="flex justify-between py-2 border-b border-slate-100">
-              <span className="text-slate-500">Primary Database</span>
-              <span className="font-semibold text-slate-900">PostgreSQL (Knex.js Repository)</span>
-            </div>
-            <div className="flex justify-between py-2 border-b border-slate-100">
-              <span className="text-slate-500">WhatsApp Engine</span>
-              <span className="font-semibold text-slate-900">Baileys Multi-File Auth</span>
-            </div>
-            <div className="flex justify-between py-2 border-b border-slate-100">
-              <span className="text-slate-500">Export Engine</span>
-              <span className="font-semibold text-slate-900">ExcelJS Streaming</span>
-            </div>
-            <div className="flex justify-between py-2">
-              <span className="text-slate-500">Multi-Factory Ready</span>
-              <span className="font-semibold text-emerald-700">Company &gt; Factory &gt; Machine &gt; Production</span>
+              <div className="space-y-3 text-xs">
+                <div className="flex justify-between py-2 border-b border-slate-100">
+                  <span className="text-slate-500">Primary Database</span>
+                  <span className="font-semibold text-slate-900">PostgreSQL (Knex.js Repository)</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-slate-100">
+                  <span className="text-slate-500">WhatsApp Engine</span>
+                  <span className="font-semibold text-slate-900">Baileys Multi-File Auth</span>
+                </div>
+                <div className="flex justify-between py-2 border-b border-slate-100">
+                  <span className="text-slate-500">Export Engine</span>
+                  <span className="font-semibold text-slate-900">ExcelJS Streaming</span>
+                </div>
+                <div className="flex justify-between py-2">
+                  <span className="text-slate-500">Multi-Factory Ready</span>
+                  <span className="font-semibold text-emerald-700">Company &gt; Factory &gt; Machine &gt; Production</span>
+                </div>
+              </div>
             </div>
           </div>
-        </div>
+        )}
 
-        {/* WhatsApp Gateway Integration */}
-        <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm col-span-1 md:col-span-2">
-          <div className="flex items-center gap-2 text-xs font-bold text-slate-800 mb-4">
-            <Database className="w-4 h-4 text-emerald-600" />
-            <span>WhatsApp Gateway Status</span>
+        {activeTab === 'whatsapp' && (
+          <div className="grid grid-cols-1 gap-4">
+            {/* WhatsApp Gateway Integration */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-200/80 shadow-sm">
+              <div className="flex items-center gap-2 text-xs font-bold text-slate-800 mb-4">
+                <Database className="w-4 h-4 text-emerald-600" />
+                <span>WhatsApp Gateway Status</span>
+              </div>
+              
+              <WhatsAppStatusPanel />
+            </div>
           </div>
-          
-          <WhatsAppStatusPanel />
-        </div>
+        )}
       </div>
     </div>
   );

@@ -13,15 +13,35 @@ const { tenantContext } = require('../middleware/tenantMiddleware');
 
 const router = express.Router();
 
-// System Health Check
-router.get('/health', (req, res) => {
-  res.status(200).json({
-    status: 'healthy',
-    timestamp: new Date().toISOString(),
-    uptime: process.uptime(),
-    version: '1.0.0',
-    service: 'Textile ERP API'
-  });
+const { knex } = require('../database/knex');
+
+// System & Database Health Check
+router.get('/health', async (req, res) => {
+  try {
+    // Check PostgreSQL connection
+    await knex.raw('SELECT 1');
+    
+    res.status(200).json({
+      status: 'healthy',
+      database: 'connected',
+      timestamp: new Date().toISOString(),
+      uptime: process.uptime(),
+      memory: {
+        rss: `${Math.round(process.memoryUsage().rss / 1024 / 1024)} MB`,
+        heapUsed: `${Math.round(process.memoryUsage().heapUsed / 1024 / 1024)} MB`,
+      },
+      version: '1.0.0',
+      service: 'Textile ERP API'
+    });
+  } catch (error) {
+    res.status(503).json({
+      status: 'unhealthy',
+      database: 'disconnected',
+      error: error.message,
+      timestamp: new Date().toISOString(),
+      service: 'Textile ERP API'
+    });
+  }
 });
 
 // Phase 1 Core Modules
