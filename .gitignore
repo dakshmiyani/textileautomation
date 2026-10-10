@@ -11,7 +11,7 @@ node_modules/
 # WhatsApp Auth Multi-File Credentials
 storage/whatsapp-auth/
 */storage/whatsapp-auth/
-auth/
+
 .wwebjs_auth/
 .wwebjs_cache/
 
