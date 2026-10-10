@@ -1,13 +1,13 @@
 const express = require('express');
-const productionController = require('./production.controller');
-const { authenticate } = require('../../middleware/auth.middleware');
-const { requirePermission } = require('../../middleware/permission.middleware');
-const { validate } = require('../../middleware/validation.middleware');
+const productionController = require('./productionController');
+const { authenticate } = require('../../middleware/authMiddleware');
+const { requirePermission } = require('../../middleware/permissionMiddleware');
+const { validate } = require('../../middleware/validationMiddleware');
 const {
   createProductionSchema,
   updateProductionSchema,
   queryProductionSchema
-} = require('./production.validation');
+} = require('./productionValidation');
 
 const router = express.Router();
 

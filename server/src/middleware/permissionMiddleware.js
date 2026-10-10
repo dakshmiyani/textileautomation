@@ -1,4 +1,4 @@
-const { AuthorizationError } = require('./error.middleware');
+const { AuthorizationError } = require('./errorMiddleware');
 
 /**
  * Checks if authenticated user has the required permission

@@ -1,6 +1,6 @@
 const express = require('express');
-const machinesController = require('./machines.controller');
-const { authenticate } = require('../../middleware/auth.middleware');
+const machinesController = require('./machinesController');
+const { authenticate } = require('../../middleware/authMiddleware');
 
 const router = express.Router();
 router.use(authenticate);

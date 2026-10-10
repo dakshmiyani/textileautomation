@@ -1,4 +1,4 @@
-const usersRepository = require('./users.repository');
+const usersRepository = require('./usersRepository');
 
 class UsersController {
   async list(req, res, next) {

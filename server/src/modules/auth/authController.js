@@ -1,5 +1,5 @@
-const authService = require('./auth.service');
-const auditService = require('../audit/audit.service');
+const authService = require('./authService');
+const auditService = require('../audit/auditService');
 
 class AuthController {
   async login(req, res, next) {

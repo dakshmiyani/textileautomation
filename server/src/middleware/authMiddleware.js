@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 const env = require('../config/env');
-const { AuthenticationError, AuthorizationError } = require('./error.middleware');
+const { AuthenticationError, AuthorizationError } = require('./errorMiddleware');
 const { db } = require('../database/knex');
 
 /**

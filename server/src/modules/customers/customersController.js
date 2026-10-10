@@ -1,4 +1,4 @@
-const customersRepository = require('./customers.repository');
+const customersRepository = require('./customersRepository');
 const logger = require('../../config/logger');
 
 class CustomersController {

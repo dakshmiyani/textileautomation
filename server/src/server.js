@@ -2,7 +2,7 @@ const app = require('./app');
 const env = require('./config/env');
 const logger = require('./config/logger');
 const { testConnectionAndMigrate, knex } = require('./database/knex');
-const { whatsAppSessionManager } = require('./modules/whatsapp/whatsapp.connection');
+const { whatsAppSessionManager } = require('./modules/whatsapp/whatsappConnection');
 const { initExportWorkers } = require('./jobs/workers/exportWorker');
 
 async function startServer() {

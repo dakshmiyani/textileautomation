@@ -1,15 +1,15 @@
 const express = require('express');
-const authRoutes = require('../modules/auth/auth.routes');
-const productionRoutes = require('../modules/production/production.routes');
-const whatsappRoutes = require('../modules/whatsapp/whatsapp.routes');
-const auditRoutes = require('../modules/audit/audit.routes');
-const machinesRoutes = require('../modules/machines/machines.routes');
-const usersRoutes = require('../modules/users/users.routes');
-const ordersRoutes = require('../modules/orders/orders.routes');
-const customersRoutes = require('../modules/customers/customers.routes');
-const saasRoutes = require('../modules/saas/saas.routes');
-const { authenticate } = require('../middleware/auth.middleware');
-const { tenantContext } = require('../middleware/tenant.middleware');
+const authRoutes = require('../modules/auth/authRoutes');
+const productionRoutes = require('../modules/production/productionRoutes');
+const whatsappRoutes = require('../modules/whatsapp/whatsappRoutes');
+const auditRoutes = require('../modules/audit/auditRoutes');
+const machinesRoutes = require('../modules/machines/machinesRoutes');
+const usersRoutes = require('../modules/users/usersRoutes');
+const ordersRoutes = require('../modules/orders/ordersRoutes');
+const customersRoutes = require('../modules/customers/customersRoutes');
+const saasRoutes = require('../modules/saas/saasRoutes');
+const { authenticate } = require('../middleware/authMiddleware');
+const { tenantContext } = require('../middleware/tenantMiddleware');
 
 const router = express.Router();
 

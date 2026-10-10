@@ -1,5 +1,5 @@
 const { jobQueue } = require('../queue');
-const productionService = require('../../modules/production/production.service');
+const productionService = require('../../modules/production/productionService');
 const logger = require('../../config/logger');
 
 /**

@@ -1,4 +1,4 @@
-const auditService = require('./audit.service');
+const auditService = require('./auditService');
 
 class AuditController {
   async getLogs(req, res, next) {

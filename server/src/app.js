@@ -6,8 +6,8 @@ const { v4: uuidv4 } = require('uuid');
 const env = require('./config/env');
 const logger = require('./config/logger');
 const apiV1Router = require('./routes');
-const { errorHandler, notFoundHandler } = require('./middleware/error.middleware');
-const { apiLimiter } = require('./middleware/rateLimit.middleware');
+const { errorHandler, notFoundHandler } = require('./middleware/errorMiddleware');
+const { apiLimiter } = require('./middleware/rateLimitMiddleware');
 
 const app = express();
 

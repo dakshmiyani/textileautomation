@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
-const saasRepository = require('./saas.repository');
+const saasRepository = require('./saasRepository');
 const { knex } = require('../../database/knex');
-const { ValidationError } = require('../../middleware/error.middleware');
+const { ValidationError } = require('../../middleware/errorMiddleware');
 
 class SaasService {
   async listTenants() {

@@ -1,4 +1,4 @@
-const saasService = require('./saas.service');
+const saasService = require('./saasService');
 
 class SaasController {
   async listTenants(req, res, next) {

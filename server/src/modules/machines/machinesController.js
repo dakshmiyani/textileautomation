@@ -1,4 +1,4 @@
-const machinesRepository = require('./machines.repository');
+const machinesRepository = require('./machinesRepository');
 
 class MachinesController {
   async list(req, res, next) {

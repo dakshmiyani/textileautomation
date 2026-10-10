@@ -1,8 +1,8 @@
-const productionRepository = require('./production.repository');
-const auditService = require('../audit/audit.service');
+const productionRepository = require('./productionRepository');
+const auditService = require('../audit/auditService');
 const { generateProductionWorkbookBuffer } = require('../../integrations/excel/excelExport');
 const { eventBus, EVENTS } = require('../../utils/eventBus');
-const { NotFoundError } = require('../../middleware/error.middleware');
+const { NotFoundError } = require('../../middleware/errorMiddleware');
 const logger = require('../../config/logger');
 
 class ProductionService {
@@ -54,8 +54,8 @@ class ProductionService {
 
     // Automatically create an order from this production record
     try {
-      const ordersService = require('../orders/orders.service');
-      const customersRepository = require('../customers/customers.repository');
+      const ordersService = require('../orders/ordersService');
+      const customersRepository = require('../customers/customersRepository');
       
       let customerName = record.contact_name || 'New Customer';
       let partyName = record.contact_name || 'New Party';

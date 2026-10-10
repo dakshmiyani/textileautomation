@@ -3,8 +3,8 @@
  * Express routes for the Orders & Calculations module
  */
 const express = require('express');
-const ordersController = require('./orders.controller');
-const { authenticate } = require('../../middleware/auth.middleware');
+const ordersController = require('./ordersController');
+const { authenticate } = require('../../middleware/authMiddleware');
 
 const router = express.Router();
 

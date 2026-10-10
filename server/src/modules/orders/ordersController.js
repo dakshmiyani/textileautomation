@@ -2,7 +2,7 @@
  * Orders Controller
  * Handles HTTP requests for the Orders & Calculations module
  */
-const ordersService = require('./orders.service');
+const ordersService = require('./ordersService');
 
 class OrdersController {
   async listOrders(req, res, next) {

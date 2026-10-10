@@ -1,7 +1,7 @@
 const express = require('express');
-const saasController = require('./saas.controller');
-const { authenticate } = require('../../middleware/auth.middleware');
-const { saasOwnerContext } = require('../../middleware/saasOwner.middleware');
+const saasController = require('./saasController');
+const { authenticate } = require('../../middleware/authMiddleware');
+const { saasOwnerContext } = require('../../middleware/saasOwnerMiddleware');
 
 const router = express.Router();
 

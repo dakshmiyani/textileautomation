@@ -1,5 +1,5 @@
 const { knex } = require('../database/knex');
-const { AuthorizationError } = require('./error.middleware');
+const { AuthorizationError } = require('./errorMiddleware');
 
 /**
  * Ensures the authenticated user has access to the requested tenant.

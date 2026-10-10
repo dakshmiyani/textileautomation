@@ -1,9 +1,9 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const env = require('../../config/env');
-const authRepository = require('./auth.repository');
-const auditService = require('../audit/audit.service');
-const { AuthenticationError, ValidationError, NotFoundError } = require('../../middleware/error.middleware');
+const authRepository = require('./authRepository');
+const auditService = require('../audit/auditService');
+const { AuthenticationError, ValidationError, NotFoundError } = require('../../middleware/errorMiddleware');
 
 class AuthService {
   /**

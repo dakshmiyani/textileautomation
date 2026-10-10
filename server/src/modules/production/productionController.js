@@ -1,4 +1,4 @@
-const productionService = require('./production.service');
+const productionService = require('./productionService');
 
 class ProductionController {
   async listRecords(req, res, next) {

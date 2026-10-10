@@ -1,9 +1,9 @@
 const express = require('express');
-const authController = require('./auth.controller');
-const { validate } = require('../../middleware/validation.middleware');
-const { authenticate } = require('../../middleware/auth.middleware');
-const { authLimiter } = require('../../middleware/rateLimit.middleware');
-const { loginSchema, refreshTokenSchema, updateProfileSchema } = require('./auth.validation');
+const authController = require('./authController');
+const { validate } = require('../../middleware/validationMiddleware');
+const { authenticate } = require('../../middleware/authMiddleware');
+const { authLimiter } = require('../../middleware/rateLimitMiddleware');
+const { loginSchema, refreshTokenSchema, updateProfileSchema } = require('./authValidation');
 
 const router = express.Router();
 

@@ -1,4 +1,4 @@
-const whatsAppService = require('./whatsapp.service');
+const whatsAppService = require('./whatsappService');
 
 class WhatsAppController {
   async getStatus(req, res, next) {

@@ -5,8 +5,8 @@ const { validateProductionData } = require('../src/integrations/whatsapp/validat
 const { duplicateDetector } = require('../src/integrations/whatsapp/duplicateDetector');
 const { generateProductionWorkbookBuffer } = require('../src/integrations/excel/excelExport');
 const { testConnectionAndMigrate, knex } = require('../src/database/knex');
-const authService = require('../src/modules/auth/auth.service');
-const productionService = require('../src/modules/production/production.service');
+const authService = require('../src/modules/auth/authService');
+const productionService = require('../src/modules/production/productionService');
 const app = require('../src/app');
 
 let passed = 0;
@@ -285,7 +285,7 @@ Delivery after 7 Days
   });
 
   await test('Save customer name, party name, address and gst no and send in reply', async () => {
-    const customersRepository = require('../src/modules/customers/customers.repository');
+    const customersRepository = require('../src/modules/customers/customersRepository');
     const { validateProductionData } = require('../src/integrations/whatsapp/validator');
 
     // 1. Upsert customer profile

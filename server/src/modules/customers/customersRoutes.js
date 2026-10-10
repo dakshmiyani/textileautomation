@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const customersController = require('./customers.controller');
-const { authenticate } = require('../../middleware/auth.middleware');
+const customersController = require('./customersController');
+const { authenticate } = require('../../middleware/authMiddleware');
 
 // GET /api/customers
 router.get('/', authenticate, customersController.getCustomers.bind(customersController));

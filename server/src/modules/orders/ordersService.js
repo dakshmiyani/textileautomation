@@ -2,11 +2,11 @@
  * Orders Service
  * Handles order lifecycle, calculation recalculations, and WhatsApp responses
  */
-const ordersRepository = require('./orders.repository');
-const customersRepository = require('../customers/customers.repository');
+const ordersRepository = require('./ordersRepository');
+const customersRepository = require('../customers/customersRepository');
 const { calculateOrderMetrics } = require('../../integrations/whatsapp/orderCalculations');
 const { parseOrderMessage, formatOrderReplyMessage } = require('../../integrations/whatsapp/orderParser');
-const { whatsAppSessionManager } = require('../whatsapp/whatsapp.connection');
+const { whatsAppSessionManager } = require('../whatsapp/whatsappConnection');
 const logger = require('../../config/logger');
 
 class OrdersService {

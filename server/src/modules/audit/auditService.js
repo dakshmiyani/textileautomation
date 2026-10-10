@@ -1,4 +1,4 @@
-const auditRepository = require('./audit.repository');
+const auditRepository = require('./auditRepository');
 const logger = require('../../config/logger');
 
 class AuditService {

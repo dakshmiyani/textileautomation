@@ -3,9 +3,9 @@ const { isOrderConfirmationMessage, parseOrderMessage, formatOrderReplyMessage }
 const { validateProductionData } = require('../../integrations/whatsapp/validator');
 const { duplicateDetector } = require('../../integrations/whatsapp/duplicateDetector');
 const { defaultContactStore: contactStore } = require('../../integrations/whatsapp/contacts');
-const productionService = require('../production/production.service');
-const ordersService = require('../orders/orders.service');
-const customersRepository = require('../customers/customers.repository');
+const productionService = require('../production/productionService');
+const ordersService = require('../orders/ordersService');
+const customersRepository = require('../customers/customersRepository');
 const { knex } = require('../../database/knex');
 const logger = require('../../config/logger');
 

@@ -1,4 +1,4 @@
-const { AuthorizationError } = require('./error.middleware');
+const { AuthorizationError } = require('./errorMiddleware');
 
 function saasOwnerContext(req, res, next) {
   try {

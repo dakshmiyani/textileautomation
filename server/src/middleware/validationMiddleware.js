@@ -1,4 +1,4 @@
-const { ValidationError } = require('./error.middleware');
+const { ValidationError } = require('./errorMiddleware');
 
 /**
  * Validates request body, query, and params against Zod schemas

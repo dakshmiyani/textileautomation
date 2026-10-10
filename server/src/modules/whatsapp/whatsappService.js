@@ -1,7 +1,7 @@
-const { whatsAppSessionManager } = require('./whatsapp.connection');
-const { handleIncomingMessage } = require('./whatsapp.messageHandler');
+const { whatsAppSessionManager } = require('./whatsappConnection');
+const { handleIncomingMessage } = require('./whatsappMessageHandler');
 const { knex } = require('../../database/knex');
-const auditService = require('../audit/audit.service');
+const auditService = require('../audit/auditService');
 const logger = require('../../config/logger');
 
 class WhatsAppService {
